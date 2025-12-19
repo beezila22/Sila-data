@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHADOW V2 - SYSTEM LINK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f3ff;
+            --secondary: #bc13fe;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Grid Animation */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            perspective: 1000px;
+            transform: translateY(0);
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 400px; }
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 3rem;
+            border-radius: 0px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
+            position: relative;
+            clip-path: polygon(
+                10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%
+            );
+        }
+
+        /* Corner Decorations */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            transition: 0.3s;
+        }
+        .tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+        .tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+        .bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+        .br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .status-line {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        input::placeholder {
+            color: rgba(0, 243, 255, 0.3);
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transition: 0.3s;
+            z-index: -1;
+        }
+
+        button:hover {
+            color: #000;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        button:hover::before {
+            left: 0;
+        }
+
+        #result {
+            margin-top: 30px;
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .code-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary);
+            text-shadow: 0 0 15px var(--secondary);
+            letter-spacing: 5px;
+            border: 1px dashed var(--secondary);
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .code-display:active {
+            transform: scale(0.98);
+        }
+
+        .code-display::after {
+            content: 'CLICK TO COPY';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            opacity: 0.7;
+        }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Corner Decorations -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <h1>SHADOW V2</h1>
+        <div class="status-line">System Status: <span style="color:var(--primary)">ONLINE</span></div>
+
+        <div class="input-group">
+            <input type="text" id="number" placeholder="ENTER TARGET NUMBER (e.g. 509...)" autocomplete="off">
+        </div>
+
+        <button onclick="getCode()">GENERATE CODE</button>
+
+        <div id="result"></div>
+
+        <footer>POWERED BY DYBY TECH // ENCRYPTED CONNECTION</footer>
+    </div>
+
+    <script>
+        async function getCode() {
+            const numberInput = document.getElementById("number");
+            const resDiv = document.getElementById("result");
+            const num = numberInput.value.replace(/[^0-9]/g, '');
+
+            if (!num) {
+                playSound('error');
+                resDiv.innerHTML = "<span style='color:#ff0055; text-shadow:0 0 10px #ff0055'>[ERROR] INPUT REQUIRED</span>";
+                numberInput.style.borderColor = "#ff0055";
+                return;
+            }
+
+            // Reset styling
+            numberInput.style.borderColor = "#00f3ff";
+            resDiv.innerHTML = '<div class="loader"></div><span style="margin-top:10px; font-size:0.8rem; letter-spacing:2px">ESTABLISHING HANDSHAKE...</span>';
+
+            try {
+                const req = await fetch(`/code?number=${num}`);
+                const data = await req.json();
+
+                if (data.code) {
+                    resDiv.innerHTML = `
+                        <div style="font-size:0.8rem; color:#aaa">PAIRING CODE RECEIVED:</div>
+                        <div class="code-display" onclick="copyCode('${data.code}')">${data.code}</div>
+                    `;
+                    playSound('success');
+                } else if (data.status === 'already_connected') {
+                    resDiv.innerHTML = "<span style='color:#0f0; text-shadow:0 0 10px #0f0'>[SYSTEM] ALREADY LINKED</span>";
+                } else {
+                    resDiv.innerHTML = "<span style='color:#ff0055'>[ERROR] CONNECTION FAILED</span>";
+                }
+            } catch (e) {
+                resDiv.innerHTML = "<span style='color:#ff0055'>[CRITICAL] SERVER UNREACHABLE</span>";
+            }
+        }
+
+        function copyCode(code) {
+            navigator.clipboard.writeText(code);
+            const display = document.querySelector('.code-display');
+            const originalText = display.innerText;
+            
+            display.innerText = "COPIED";
+            display.style.borderColor = "#0f0";
+            display.style.color = "#0f0";
+            
+            setTimeout(() => {
+                display.innerText = originalText;
+                display.style.borderColor = "var(--secondary)";
+                display.style.color = "var(--secondary)";
+            }, 1500);
+        }
+
+        // Optional: Simple placeholder sound function
+        function playSound(type) {
+            // Sound effects logic could go here
+        }
+    </script>
+</body>
+    </html>
