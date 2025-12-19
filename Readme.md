@@ -83,18 +83,6 @@ Python/JavaScript automation tools
 
 ---
 
-<div align="center">
-
-📈 Activity Graph
-
-https://github-readme-activity-graph.vercel.app/graph?username=Sila-Md&theme=react-dark&hide_border=true
-
-🏆 GitHub Trophies
-
-https://github-profile-trophy.vercel.app/?username=Sila-Md&theme=radical&no-frame=true&row=1&column=4
-
-</div>
-
 <p align="center">
   <i>⚡ Code never lies, comments sometimes do ⚡</i>
 </p>
